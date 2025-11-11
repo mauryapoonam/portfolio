@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Poonam Maurya — React Native Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #6C63FF;
+            --muted: #6b7280;
+            --bg: #0f1724;
+            --card: #0b1320;
+            --glass: rgba(255, 255, 255, 0.04);
+            color-scheme: dark;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            background: linear-gradient(180deg, #071026 0%, #0b1220 100%);
+            color: #e6eef8
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 20px
+        }
+
+        /* Header Responsive */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap
+        }
+
+        .brand {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex: 1;
+            min-width: 280px
+        }
+
+        .avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            color: white;
+            flex-shrink: 0
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(20px, 5vw, 28px);
+            line-height: 1.2
+        }
+
+        p.lead {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: clamp(13px, 2.5vw, 16px);
+            line-height: 1.4
+        }
+
+        nav {
+            display: flex;
+            gap: 12px
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            border: 0;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap
+        }
+
+        /* Main Layout Responsive */
+        main {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 28px
+        }
+
+        /* Tablet */
+        @media (max-width:960px) {
+            main {
+                grid-template-columns: 1fr
+            }
+
+            aside .card {
+                position: relative !important;
+                top: 0 !important
+            }
+        }
+
+        /* Mobile Landscape & Small Tablets */
+        @media (max-width:768px) {
+            .container {
+                padding: 16px;
+                margin: 16px auto
+            }
+
+            header {
+                gap: 12px
+            }
+
+            .brand {
+                gap: 12px
+            }
+
+            .avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 18px
+            }
+
+            main {
+                margin-top: 20px;
+                gap: 20px
+            }
+        }
+
+        /* Mobile Portrait */
+        @media (max-width:480px) {
+            .container {
+                padding: 12px;
+                margin: 12px auto
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start
+            }
+
+            .brand {
+                flex-direction: row;
+                width: 100%;
+                min-width: 0
+            }
+
+            nav {
+                width: 100%;
+                justify-content: stretch
+            }
+
+            .btn {
+                flex: 1;
+                text-align: center;
+                padding: 12px 16px
+            }
+
+            .avatar {
+                width: 56px;
+                height: 56px;
+                font-size: 16px
+            }
+        }
+
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* About + Skills */
+        .about h2 {
+            margin: 0 0 8px;
+            font-size: clamp(20px, 4vw, 24px)
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px
+        }
+
+        .skill {
+            background: var(--glass);
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: clamp(12px, 2vw, 13px);
+            color: var(--muted)
+        }
+
+
+        /* Projects Grid Responsive */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px
+        }
+
+        @media (min-width:761px) and (max-width:960px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media (max-width:760px) {
+            .projects-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media (max-width:480px) {
+            .projects-grid {
+                gap: 12px
+            }
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 14px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.015));
+        }
+
+        .project-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .project-title strong {
+            font-size: clamp(15px, 3vw, 17px)
+        }
+
+        .meta {
+            font-size: clamp(12px, 2vw, 13px);
+            color: var(--muted)
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 6px 8px;
+            border-radius: 8px;
+            font-size: clamp(11px, 2vw, 12px);
+            color: var(--muted)
+        }
+
+
+        /* Right column (Sidebar) - Fixed overlap issue */
+        aside .card {
+            position: sticky;
+            top: 28px;
+            z-index: 10;
+        }
+
+        /* Remove sticky on tablet/mobile to prevent overlap */
+        @media (max-width:960px) {
+            aside .card {
+                position: relative !important;
+                top: 0 !important;
+                z-index: 1;
+            }
+        }
+
+        aside h3,
+        aside h4 {
+            font-size: clamp(16px, 3vw, 18px)
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: clamp(13px, 2.5vw, 15px)
+        }
+
+        .contact-item strong {
+            white-space: nowrap
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: clamp(13px, 2.5vw, 14px);
+            line-height: 1.5
+        }
+
+
+        footer {
+            margin-top: 36px;
+            text-align: center;
+            color: var(--muted);
+            font-size: clamp(12px, 2vw, 13px);
+            padding: 20px 0;
+            position: relative;
+            z-index: 20;
+        }
+
+
+        /* Small utilities */
+        .sublabel {
+            font-size: clamp(12px, 2.5vw, 13px);
+            color: var(--muted);
+            font-weight: 600
+        }
+
+        .project-desc {
+            color: #cfe7ff;
+            font-size: clamp(13px, 2.5vw, 14px);
+            line-height: 1.5
+        }
+
+        .playlink {
+            font-size: clamp(12px, 2vw, 13px)
+        }
+
+        h2 {
+            font-size: clamp(20px, 4vw, 24px)
+        }
+
+        /* List Responsive */
+        ul {
+            padding-left: 18px
+        }
+
+        ul li {
+            margin-bottom: 4px;
+            line-height: 1.5
+        }
+
+        @media (max-width:480px) {
+            ul {
+                padding-left: 20px;
+                font-size: 14px
+            }
+
+            .card {
+                padding: 14px
+            }
+
+            aside .card {
+                margin-top: 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="brand">
+                <div class="avatar">PM</div>
+                <div>
+                    <h1>Poonam Maurya</h1>
+                    <p class="lead">React Native Developer | 5+ years | JavaScript | TypeScript | Firebase | Redux</p>
+                </div>
+            </div>
+            <nav>
+                <a class="btn" href="#projects">View Projects</a>
+            </nav>
+        </header>
+        <main>
+            <section>
+                <div class="card about">
+                    <h2>About</h2>
+                    <p class="project-desc">I'm a passionate React Native developer with 5+ years of experience building
+                        cross-platform mobile applications (Android & iOS). I build apps from scratch, modify existing
+                        projects, implement new features, and publish apps to the Play Store and App Store. I specialize
+                        in responsive UI design, Firebase integration, Redux state management, and reliable API
+                        integrations.</p>
+                    <div style="margin-top:14px">
+                        <div class="sublabel">Core Responsibilities</div>
+                        <ul class="muted" style="margin:6px 0 0 18px">
+                            <li>End-to-end mobile app development (React Native)</li>
+                            <li>UI/UX and responsive design for Android & iOS</li>
+                            <li>Firebase (Auth, Firestore, Messaging), OneSignal, Push Notifications</li>
+                            <li>Redux/Redux Toolkit state management</li>
+                            <li>Publishing apps to Google Play & Apple App Store</li>
+                        </ul>
+                    </div>
+                    <div style="margin-top:14px">
+                        <div class="sublabel">Technical Skills</div>
+                        <div class="skills">
+                            <div class="skill">React Native</div>
+                            <div class="skill">JavaScript (ES6+)</div>
+                            <div class="skill">TypeScript</div>
+                            <div class="skill">Firebase</div>
+                            <div class="skill">Redux</div>
+                            <div class="skill">REST API Integration</div>
+                            <div class="skill">Figma → Implementation</div>
+                            <div class="skill">Android & iOS Publishing</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="projects" style="margin-top:18px">
+                    <h2 style="margin-bottom:10px">Projects</h2>
+                    <div class="projects-grid">
+                        <!-- OnfleekQ -->
+                        <article class="project-card card">
+                            <div class="project-title">
+                                <strong>OnfleekQ</strong>
+                                <div class="meta">Team Size: 3</div>
+                            </div>
+                            <div class="project-desc">OnfleekQ is a beauty makeup product app that is your ultimate
+                                guide to enhancing your natural beauty. With a wide range of high-quality cosmetics and
+                                skincare products, the app provides tips, tutorials, and personalized recommendations to
+                                bring out your best features.</div>
+                            <div class="tags" style="margin-top:auto">
+                                <div class="tag">React Native</div>
+                                <div class="tag">UI Design</div>
+                                <div class="tag">E-commerce</div>
+                            </div>
+                        </article>
+
+                        <!-- Astro Sadhana -->
+                        <article class="project-card card">
+                            <div class="project-title">
+                                <strong>Astro Sadhana</strong>
+                                <div class="meta">Team Size: 8</div>
+                            </div>
+                            <div class="project-desc">Astro Sadhana Application is a comprehensive tool for enthusiasts
+                                to explore and deepen their understanding of astrology. It offers birth chart analysis,
+                                predictive insights, and personalized guidance.</div>
+                            <div class="meta playlink">Play Store: <a
+                                    href="https://play.google.com/store/apps/details?id=com.sadhana.astro&hl=en_IN&gl=US&pli=1"
+                                    target="_blank">Open on Google Play</a></div>
+                            <div class="tags">
+                                <div class="tag">React Native</div>
+                                <div class="tag">Charts & Analysis</div>
+                                <div class="tag">User Profiles</div>
+                            </div>
+                        </article>
+
+                        <!-- Robo Reward -->
+                        <article class="project-card card">
+                            <div class="project-title">
+                                <strong>Robo Reward</strong>
+                                <div class="meta">Team Size: 3</div>
+                            </div>
+                            <div class="project-desc">Robo Reward is a customer loyalty reward program software designed
+                                for businesses wanting to grow customer loyalty and resell their software.</div>
+                            <div class="tags">
+                                <div class="tag">React Native</div>
+                                <div class="tag">Loyalty Program</div>
+                                <div class="tag">B2B</div>
+                            </div>
+                        </article>
+
+                        <!-- Easy on Service -->
+                        <article class="project-card card">
+                            <div class="project-title">
+                                <strong>Easy On Service</strong>
+                                <div class="meta">Team Size: 3</div>
+                            </div>
+                            <div class="project-desc">Easy On Services is a service-based application to provide
+                                customer services like hair cutting, painting, AC repair, etc. Services are available
+                                in-shop or booked online at the user's location.</div>
+                            <div class="tags">
+                                <div class="tag">Service Booking</div>
+                                <div class="tag">Location</div>
+                                <div class="tag">React Native</div>
+                            </div>
+                        </article>
+
+                        <!-- Doc Scanner -->
+                        <article class="project-card card">
+                            <div class="project-title">
+                                <strong>Doc Scanner</strong>
+                                <div class="meta">Team Size: 4</div>
+                            </div>
+                            <div class="project-desc">Doc Scanner captures files and converts them to multiple file
+                                types, supports filters, addition and deletion of documents within the app.</div>
+                            <div class="tags">
+                                <div class="tag">Image Processing</div>
+                                <div class="tag">File Conversion</div>
+                                <div class="tag">React Native</div>
+                            </div>
+                        </article>
+
+                        <!-- Jodi Banav -->
+                        <article class="project-card card">
+                            <div class="project-title">
+                                <strong>Jodi Banav</strong>
+                                <div class="meta">Team Size: 3</div>
+                            </div>
+                            <div class="project-desc">Jodi Banav is a matrimony app that connects individuals seeking
+                                life partners with advanced matching algorithms, a secure and user-friendly interface,
+                                and personalized matchmaking services.</div>
+                            <div class="tags">
+                                <div class="tag">Matching Algorithms</div>
+                                <div class="tag">Profiles</div>
+                                <div class="tag">React Native</div>
+                            </div>
+                        </article>
+
+                        <!-- Abdali Hospital (Patient App) -->
+                        <article class="project-card card">
+                            <div class="project-title">
+                                <strong>Abdali Hospital App (Patient)</strong>
+                                <div class="meta">Healthcare</div>
+                            </div>
+                            <div class="project-desc">The Abdali Hospital Patient App helps patients check lab &
+                                radiology reports, book/manage doctor appointments, view doctor profiles, update
+                                details, receive notifications, and supports English & Arabic languages with a simple
+                                UX.</div>
+                            <div class="meta playlink">Search on Play Store: <a
+                                    href="https://play.google.com/store/search?q=abdali+hospital+app&c=apps&hl=en"
+                                    target="_blank">Open Play Store Results</a></div>
+                            <div class="tags">
+                                <div class="tag">Healthcare</div>
+                                <div class="tag">Multi-language</div>
+                                <div class="tag">Firebase / SAP (integration)</div>
+                            </div>
+                        </article>
+
+                        <!-- KUBE Physician -->
+                        <article class="project-card card">
+                            <div class="project-title">
+                                <strong>KUBE Physician (Doctor App)</strong>
+                                <div class="meta">Healthcare • Enterprise</div>
+                            </div>
+                            <div class="project-desc">KUBE Physician is a React Native healthcare app for Abdali
+                                Hospital doctors integrated with SAP backend. Features: biometric login, patient
+                                management, orders, progress notes, medications, lab/radiology, surgeries, document
+                                management, real-time sync, and multi-orientation support.</div>
+                            <div class="tags">
+                                <div class="tag">Enterprise</div>
+                                <div class="tag">SAP Integration</div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+            <aside>
+                <div class="card">
+                    <h3>Contact</h3>
+                    <div class="contact-list">
+                        <div class="contact-item"><strong>Email:</strong><span class="muted">
+                                poonammaurya845@gmail.com</span></div>
+                        <div class="contact-item"><strong>LinkedIn:</strong><span class="muted"> 
+                               <a href="https://www.linkedin.com/in/poonam-maurya-b910b5194?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">View Linkedin Profile</a>
+                        </span></div>
+                        <div class="contact-item"><strong>Mobile No.:</strong><span class="muted">7984479025</span></div>
+                        <div class="contact-item"><strong>Location:</strong><span class="muted"> India</span></div>
+                    </div>
+
+                    <div style="margin-top:14px">
+                        <h4>Availability</h4>
+                        <p class="muted">Open to opportunities — Full-time / Remote</p>
+                    </div>
+                </div>
+            </aside>
+            <aside>
+                <div style="height:18px"></div>
+                <div class="card">
+                    <h4>Quick Highlights</h4>
+                    <ul class="muted" style="margin:8px 0 0 18px">
+                        <li>5+ years React Native experience</li>
+                        <li>Published apps on Play Store & App Store</li>
+                        <li>Strong UI & responsive design skills</li>
+                        <li>Firebase, OneSignal, Redux, API integrations</li>
+                    </ul>
+                </div>
+            </aside>
+        </main>
+        <footer>
+            <div class="muted">© 2025 Poonam Maurya — React Native Developer</div>
+        </footer>
+    </div>
+</body>
+
+</html>
